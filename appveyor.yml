@@ -63,6 +63,8 @@ install:
   - set OUR_WD=%cd%
   - set OPENBLAS_FNAME=openblas-%OPENBLAS_COMMIT%_win%PYTHON_ARCH%.tar.gz
   - curl -LO %RACK_URL%/%OPENBLAS_FNAME%
+  - ls
+  - echo "cd %OPENBLAS_ROOT% & tar zxvf %OUR_WD%\%OPENBLAS_FNAME%"
   - cmd /c "cd %OPENBLAS_ROOT% & tar zxvf %OUR_WD%\%OPENBLAS_FNAME%"
 
 build_script:
