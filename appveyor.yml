@@ -63,8 +63,13 @@ install:
   - set OUR_WD=%cd%
   - set OPENBLAS_FNAME=openblas-%OPENBLAS_COMMIT%_win%PYTHON_ARCH%.tar.gz
   - curl -L %RACK_URL%/%OPENBLAS_FNAME% -o %OPENBLAS_FNAME%
+  - ls
   - if not exist "%OPENBLAS_ROOT%" mkdir %OPENBLAS_ROOT%
-  - cmd /c "cd %OPENBLAS_ROOT% & tar zxvf %OUR_WD%\%OPENBLAS_FNAME%"
+  - cd %OPENBLAS_ROOT%
+  - echo %cd%
+  - echo %OUR_WD%\%OPENBLAS_FNAME%
+  - tar zxvf %OUR_WD%\%OPENBLAS_FNAME%
+  - cd %OUR_WD%
 
 build_script:
   # Build and install the wheel
