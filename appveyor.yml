@@ -60,7 +60,9 @@ install:
   - git clone https://github.com/numpy/numpy.git
   # Download built openblas libraries
   - PATH=%PATH%;c:\msys64\usr\bin
-  - set OPENBLAS_FNAME=openblas-%OPENBLAS_COMMIT%_win%PYTHON_ARCH%.tar.gz
+  #- set OPENBLAS_FNAME=openblas-%OPENBLAS_COMMIT%_win%PYTHON_ARCH%.tar.gz
+  # Use the borked name just for now.
+  - set OPENBLAS_FNAME=openblas-%PYTHON_ARCH%.tar.gz
   - curl -L %RACK_URL%/%OPENBLAS_FNAME% -o %OPENBLAS_FNAME%
   - if not exist "%OPENBLAS_ROOT%" mkdir %OPENBLAS_ROOT%
   - bash -c "fn=$PWD/$OPENBLAS_FNAME ; cd $OPENBLAS_ROOT && tar zxvf $fn"
