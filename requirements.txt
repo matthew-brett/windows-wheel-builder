@@ -1,3 +1,2 @@
-cython<=0.23.4
+cython
 delocate
-patch
