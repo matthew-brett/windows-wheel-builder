@@ -78,7 +78,7 @@ build_script:
 
 test_script:
   # Run the project tests
-  - python -c "import numpy; numpy.test()"
+  - python -c "import numpy; numpy.test(verbose=3)"
   - cd ..
 
 after_test:
