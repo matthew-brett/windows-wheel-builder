@@ -60,6 +60,8 @@ def main():
     lib_basename = OPENBLAS_LIBNAME_RE.search(cfg_template).groups()[0]
     with open('site.cfg', 'wt') as fobj:
         fobj.write(cfg_template.format(openblas_root=openblas_root))
+    # Copy guard against importing without SSE2
+    shutil.copy2(pjoin(BUILD_STUFF, '_distributor_init.py'), 'numpy')
     check_call(['python', 'setup.py', 'bdist_wheel'])
     add_library(pjoin(blas_dir, 'bin', lib_basename + '.dll'))
 

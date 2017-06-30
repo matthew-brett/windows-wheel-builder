@@ -1,4 +1,4 @@
-""" Inialization specific to Windows ATLAS SSE2 build
+""" Initialization specific to SSE2 builds of BLAS / LAPACK libs
 """
 
 # Add check for SSE2 on Windows
