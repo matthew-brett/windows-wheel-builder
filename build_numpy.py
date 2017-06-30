@@ -46,12 +46,12 @@ def add_library(lib_path, dist_path='dist'):
 
 def main():
     argc = len(sys.argv)
-    numpy_path = sys.argv[1] if argc > 1 else os.getcwd()
+    numpy_path = abspath(sys.argv[1] if argc > 1 else os.getcwd())
     n_bits = sys.argv[2] if argc > 2 else get_bitness()
-    openblas_root = sys.argv[3] if argc > 3 else DEFAULT_OPENBLAS_ROOT
+    openblas_root = abspath(sys.argv[3] if argc > 3 else DEFAULT_OPENBLAS_ROOT)
     if n_bits not in ('32', '64'):
         raise RuntimeError("Number of bits should be 32 or 64")
-    os.chdir(abspath(numpy_path))
+    os.chdir(numpy_path)
     check_call(['git', 'clean', '-fxd'])
     check_call(['git', 'reset', '--hard'])
     blas_dir = pjoin(openblas_root, str(n_bits))

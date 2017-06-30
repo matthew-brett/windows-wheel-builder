@@ -64,6 +64,8 @@ install:
   - curl -L %RACK_URL%/%OPENBLAS_FNAME% -o %OPENBLAS_FNAME%
   - if not exist "%OPENBLAS_ROOT%" mkdir %OPENBLAS_ROOT%
   - bash -c "fn=$PWD/$OPENBLAS_FNAME ; cd $OPENBLAS_ROOT && tar zxvf $fn"
+  - dir /s %OPENBLAS_ROOT%\%PYTHON_ARCH%
+  - type %OPENBLAS_ROOT%\%PYTHON_ARCH%\site.cfg.template
 
 build_script:
   # Build and install the wheel
