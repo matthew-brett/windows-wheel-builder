@@ -1,7 +1,6 @@
 # vim ft=yaml
 
 install:
-  - PYTHON: "C:\\Python27"
   - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
 
 build_script:
