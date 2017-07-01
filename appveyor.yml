@@ -1,14 +1,58 @@
 # vim ft=yaml
+# CI on Windows via appveyor
+# Largely from:
+# https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
+
+os: Visual Studio 2015
+
+environment:
+    global:
+      NUMPY_COMMIT: v1.13.0
+      MWPY_URL: https://6faba06bebdc7f28a358-9ba0e05766e4bd68e53ad28ecdbfcaa7.ssl.cf2.rackcdn.com
+      OPENBLAS_COMMIT: v0.2.19
+      OPENBLAS_ROOT: c:\opt
+      WHEELHOUSE_UPLOADER_USERNAME: travis-worker
+      # This the key for matthew-brett
+      WHEELHOUSE_UPLOADER_SECRET:
+        secure: 9s0gdDGnNnTt7hvyNpn0/ZzOMGPdwPp2SewFTfGzYk7uI+rdAN9rFq2D1gAP4NQh
+
+    matrix:
+
+    - PYTHON: "C:\\Python27"
 
 install:
-  - PYTHON: "C:\\Python27"
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
   - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
 
+  # Get Python bitness
+  # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
+  - set PY_CMD=python -c "import platform; print(platform.architecture()[0][:2])"
+  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
+
+  # Fix MSVC builds for 64-bit Python
+  # See
+  # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
+  - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
+
+  # Check that we have the expected version and architecture for Python
+  - python --version
+  - python -c "import struct; print(struct.calcsize('P') * 8)"
+
+  - python -m pip install --upgrade pip
+
 build_script:
+  # - pip install --no-index -f %MWPY_URL% numpy
   - pip install numpy
 
 test_script:
+  # Run the project tests
+  # - python -c "import numpy; numpy.test(verbose=3)"
   # Does msys bork the tests?
   - PATH=%PATH%;c:\msys64\usr\bin
   - pip install nose
-  - python -c "import numpy; numpy.test(verbose=4)"
+  - python -c "import numpy"
+  - set PY_CMD=python -c "import os, numpy; print(os.path.dirname(numpy.__file__))"
+  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set NUMPY_DIR=%%i
+  - nosetests --verbosity=5 %NUMPY_DIR%\distutils\tests %NUMPY_DIR%\f2py\tests
