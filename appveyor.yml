@@ -4,22 +4,14 @@
 # https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
 
 install:
-  # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
   - set PYTHON="C:\\Python27"
   - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
-  - python -m pip install --upgrade pip
 
 build_script:
-  # - pip install --no-index -f %MWPY_URL% numpy
   - pip install numpy
 
 test_script:
-  # Run the project tests
-  # - python -c "import numpy; numpy.test(verbose=3)"
   # Does msys bork the tests?
   - PATH=%PATH%;c:\msys64\usr\bin
   - pip install nose
-  # - python -c "import numpy.distutils; numpy.distutils.test(verbose=4)"
   - python -c "import numpy.f2py; numpy.f2py.test(verbose=4)"
