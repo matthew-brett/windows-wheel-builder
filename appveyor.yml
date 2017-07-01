@@ -4,7 +4,9 @@ build_script:
   - pip install numpy
 
 test_script:
-  # Does msys bork the tests?
-  - PATH=\\Scripts;%PATH%;c:\msys64\usr\bin
+  # Adding this line causes the tests to hang forever
+  - PATH=%PATH%;c:\msys64\usr\bin
+  # Unless you uninstall gcc-fortran like this
+  - pacman -R --noconfirm gcc-fortran
   - pip install nose
   - python -c "import numpy.f2py; numpy.f2py.test(verbose=4)"
