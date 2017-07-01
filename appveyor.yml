@@ -5,7 +5,7 @@
 
 install:
   - set PYTHON="C:\\Python27"
-  - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+  # - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
 
 build_script:
   - pip install numpy
