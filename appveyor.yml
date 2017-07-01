@@ -9,6 +9,6 @@ build_script:
 
 test_script:
   # Does msys bork the tests?
-  - PATH=%PATH%;c:\msys64\usr\bin
+  # - PATH=%PATH%;c:\msys64\usr\bin
   - pip install nose
   - python -c "import numpy.f2py; numpy.f2py.test(verbose=3)"
