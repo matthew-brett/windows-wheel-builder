@@ -1,7 +1,4 @@
 # vim ft=yaml
-# CI on Windows via appveyor
-# Largely from:
-# https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
 
 os: Visual Studio 2015
 
@@ -18,20 +15,17 @@ environment:
 
     matrix:
 
-    - PYTHON: "C:\\Python27"
-    - PYTHON: "C:\\Python27-x64"
-    - PYTHON: "C:\\Python34"
-    - PYTHON: "C:\\Python34-x64"
-    - PYTHON: "C:\\Python35"
-    - PYTHON: "C:\\Python35-x64"
-    - PYTHON: "C:\\Python36"
-    - PYTHON: "C:\\Python36-x64"
+    - PYTHON: C:\Python27
+    - PYTHON: C:\Python27-x64
+    - PYTHON: C:\Python34
+    - PYTHON: C:\Python34-x64
+    - PYTHON: C:\Python35
+    - PYTHON: C:\Python35-x64
+    - PYTHON: C:\Python36
+    - PYTHON: C:\Python36-x64
 
 install:
-  # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
-  - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
 
   # Get Python bitness
   # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
@@ -43,21 +37,19 @@ install:
   # http://stackoverflow.com/questions/32091593/cannot-install-windows-sdk-7-1-on-windows-10
   - echo "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64 > "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64/vcvars64.bat"
 
-  # Check that we have the expected version and architecture for Python
-  - python --version
-  - python -c "import struct; print(struct.calcsize('P') * 8)"
-
   - python -m pip install --upgrade pip
   - pip install delocate cython
   # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
   - pip install wheel==0.26
   - git clone https://github.com/numpy/numpy.git
   # Download built openblas libraries
-  - PATH=%PATH%;c:\msys64\usr\bin
-  - set OPENBLAS_FNAME=openblas-%OPENBLAS_COMMIT%_win%PYTHON_ARCH%.tar.gz
+  - set OPENBLAS_FNAME=openblas-%OPENBLAS_COMMIT%_win%PYTHON_ARCH%.zip
   - curl -L %RACK_URL%/%OPENBLAS_FNAME% -o %OPENBLAS_FNAME%
   - if not exist "%OPENBLAS_ROOT%" mkdir %OPENBLAS_ROOT%
-  - bash -c "fn=$PWD/$OPENBLAS_FNAME ; cd $OPENBLAS_ROOT && tar zxvf $fn"
+  - set OUR_WD=%cd%
+  - cd %OPENBLAS_ROOT%
+  - unzip %OUR_WD%\%OPENBLAS_FNAME%
+  - cd %OUR_WD%
   - dir /s %OPENBLAS_ROOT%\%PYTHON_ARCH%
   - type %OPENBLAS_ROOT%\%PYTHON_ARCH%\site.cfg.template
 
@@ -74,8 +66,7 @@ build_script:
 
 test_script:
   # Run the project tests
-  # - python -c "import numpy; numpy.test(verbose=3)"
-  - python -c "import numpy"
+  - python -c "import numpy; numpy.test(verbose=3)"
   - cd ..
 
 artifacts:
