@@ -1,14 +1,10 @@
 # vim ft=yaml
-# CI on Windows via appveyor
-# Largely from:
-# https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
 
 build_script:
-  - where pip
   - pip install numpy
 
 test_script:
   # Does msys bork the tests?
-  # - PATH=%PATH%;c:\msys64\usr\bin
+  - PATH=%PATH%;c:\msys64\usr\bin
   - pip install nose
-  - python -c "import numpy.f2py; numpy.f2py.test(verbose=3)"
+  - python -c "import numpy.f2py; numpy.f2py.test(verbose=4)"
