@@ -50,7 +50,8 @@ test_script:
   # Run the project tests
   # - python -c "import numpy; numpy.test(verbose=3)"
   # Does msys bork the tests?
-  - PATH=%PATH%;c:\msys64\usr\bin
+  #- PATH=%PATH%;c:\msys64\usr\bin
+  - unzip
   - pip install nose
   - python -c "import numpy"
   - set PY_CMD=python -c "import os, numpy; print(os.path.dirname(numpy.__file__))"
