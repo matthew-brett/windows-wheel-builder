@@ -12,9 +12,9 @@ environment:
       OPENBLAS_COMMIT: v0.2.19
       OPENBLAS_ROOT: c:\opt
       WHEELHOUSE_UPLOADER_USERNAME: travis-worker
+      # This the key for matthew-brett
       WHEELHOUSE_UPLOADER_SECRET:
-        secure:
-            sb0P1lcBU2GniiKb5m1mpg6kGwWOEC9DtWRqg00+BH/ATYadhCqrpmKUdHJhPTwJ
+        secure: 9s0gdDGnNnTt7hvyNpn0/ZzOMGPdwPp2SewFTfGzYk7uI+rdAN9rFq2D1gAP4NQh
 
     matrix:
 
@@ -28,12 +28,6 @@ environment:
     - PYTHON: "C:\\Python36-x64"
 
 install:
-  - cmd: echo "Filesystem root:"
-  - dir C:\
-
-  - echo "Installed SDKs:"
-  - dir "C:/Program Files/Microsoft SDKs/Windows"
-
   # Prepend newly installed Python to the PATH of this build (this cannot be
   # done from inside the powershell script as it would require to restart
   # the parent CMD process).
@@ -75,25 +69,22 @@ build_script:
   - cd dist
   - pip install --pre --no-index -f . numpy
   - pip install nose
-  # Delete the original libraries
+  # Delete the original libraries to check import of vendored libs
   - rmdir /s /q %OPENBLAS_ROOT%\%PYTHON_ARCH%
 
 test_script:
   # Run the project tests
-  - python -c "import numpy; numpy.test(verbose=3)"
+  # - python -c "import numpy; numpy.test(verbose=3)"
+  - python -c "import numpy"
   - cd ..
 
-after_test:
-  # If tests are successful, create binary packages for the project.
-  - dir dist
-
 artifacts:
-  # Archive the generated packages in the ci.appveyor.com build report.
-  - path: dist\*.*
+  - path: numpy\dist\*.*
 
 on_success:
   # Upload the generated wheel package to Rackspace
   # On Windows, Apache Libcloud cannot find a standard CA cert bundle so we
   # disable the ssl checks.
   - pip install wheelhouse-uploader
-  - python -m wheelhouse_uploader upload --no-ssl-check --local-folder=dist win-atlas-wheels
+  - python -m wheelhouse_uploader upload --no-ssl-check --local-folder=dist
+    mingwpy-wheels
