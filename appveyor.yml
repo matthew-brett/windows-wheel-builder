@@ -43,7 +43,8 @@ install:
   - python -m pip install --upgrade pip
 
 build_script:
-  - pip install --no-index -f %MWPY_URL% numpy
+  # - pip install --no-index -f %MWPY_URL% numpy
+  - pip install numpy
 
 test_script:
   # Run the project tests
