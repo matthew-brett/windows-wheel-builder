@@ -4,7 +4,7 @@
 # https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
 
 install:
-  - set PYTHON="C:\\Python27"
+  #- set PYTHON="C:\\Python27"
   # - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
 
 build_script:
