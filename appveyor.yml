@@ -5,7 +5,7 @@ build_script:
 
 test_script:
   # Adding this line causes the tests to hang forever
-  - PATH=%PATH%;c:\msys64\usr\bin
+  # - PATH=%PATH%;c:\msys64\usr\bin
   # Unless you uninstall gcc-fortran like this
   # - pacman -R --noconfirm gcc-fortran
   - pip install nose
