@@ -1,13 +1,10 @@
 # vim ft=yaml
 
-install:
-  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
-
 build_script:
   - pip install numpy
 
 test_script:
   # Does msys bork the tests?
-  - PATH=%PATH%;c:\msys64\usr\bin
+  - PATH=\\Scripts;%PATH%;c:\msys64\usr\bin
   - pip install nose
   - python -c "import numpy.f2py; numpy.f2py.test(verbose=4)"
