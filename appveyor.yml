@@ -51,5 +51,6 @@ test_script:
   - pip install nose
   - python -c "import numpy"
   - set PY_CMD=python -c "import os, numpy; print(os.path.dirname(numpy.__file__))"
-  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_DIR=%%i
-  - nosetests %PYTHON_DIR%\distutils\tests %PYTHON_DIR%\f2py\tests
+  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set NUMPY_DIR=%%i
+  - nosetests --verbosity=3 %NUMPY_DIR%\distutils\tests %NUMPY_DIR%\f2py\tests
+  - python -c "import numpy; numpy.test(verbose=3)"
