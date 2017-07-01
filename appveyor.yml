@@ -1,7 +1,7 @@
 # vim ft=yaml
 
 install:
-  - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
 
 build_script:
   - pip install numpy
