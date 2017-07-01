@@ -3,33 +3,12 @@
 # Largely from:
 # https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
 
-os: Visual Studio 2015
-
-environment:
-    global:
-      NUMPY_COMMIT: v1.13.0
-      MWPY_URL: https://6faba06bebdc7f28a358-9ba0e05766e4bd68e53ad28ecdbfcaa7.ssl.cf2.rackcdn.com
-      OPENBLAS_COMMIT: v0.2.19
-      OPENBLAS_ROOT: c:\opt
-      WHEELHOUSE_UPLOADER_USERNAME: travis-worker
-      # This the key for matthew-brett
-      WHEELHOUSE_UPLOADER_SECRET:
-        secure: 9s0gdDGnNnTt7hvyNpn0/ZzOMGPdwPp2SewFTfGzYk7uI+rdAN9rFq2D1gAP4NQh
-
-    matrix:
-
-    - PYTHON: "C:\\Python27"
-
 install:
   # Prepend newly installed Python to the PATH of this build (this cannot be
   # done from inside the powershell script as it would require to restart
   # the parent CMD process).
+  - set PYTHON="C:\\Python27"
   - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
-
-  # Get Python bitness
-  # https://stackoverflow.com/questions/1746475/windows-batch-help-in-setting-a-variable-from-command-output#4509885
-  - set PY_CMD=python -c "import platform; print(platform.architecture()[0][:2])"
-  - for /f "tokens=1 delims=" %%i in ('%PY_CMD%') do set PYTHON_ARCH=%%i
 
   # Fix MSVC builds for 64-bit Python
   # See
