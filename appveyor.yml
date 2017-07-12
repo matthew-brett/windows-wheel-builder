@@ -4,7 +4,7 @@ os: Visual Studio 2015
 
 environment:
     global:
-      NUMPY_COMMIT: v1.13.0
+      NUMPY_COMMIT: v1.13.1
       OPENBLAS_COMMIT: v0.2.19
       OPENBLAS_ROOT: c:\opt
       WHEELHOUSE_UPLOADER_USERNAME: travis-worker
