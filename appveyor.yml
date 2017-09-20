@@ -24,7 +24,7 @@ environment:
     - PYTHON: C:\Python36-x64
 
 install:
-  - ps: install_python36.ps1
+  - ps: .\install_python362.ps1
   - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
 
   # Get Python bitness
