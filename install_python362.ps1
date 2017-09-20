@@ -16,4 +16,4 @@ Write-Host "Installing..."
 cmd /c start /wait $exePath /quiet TargetDir="$env:PYTHON" Shortcuts=0 Include_launcher=0 InstallLauncherAllUsers=0
 Write-Host "Python 3.6.2 installed to $env:PYTHON"
 
-"$env:PYTHON\Python.exe" --version
+cmd /c "$env:PYTHON\Python.exe" --version
