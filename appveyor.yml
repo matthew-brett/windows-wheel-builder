@@ -20,8 +20,8 @@ environment:
     # PYTHON: C:\Python34-x64
     # PYTHON: C:\Python35
     # PYTHON: C:\Python35-x64
-    - PYTHON: C:\Python36
-    - PYTHON: C:\Python36-x64
+    - PYTHON: C:\Python362
+    - PYTHON: C:\Python362-x64
 
 install:
   - ps: .\install_python362.ps1
