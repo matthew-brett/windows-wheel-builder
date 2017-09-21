@@ -1,7 +1,7 @@
 # Install Python 3.6.2
-if ($env:PYTHON -eq "C:\Python362-x64") {
+if ($env:PYTHON -eq "C:\Python36-x64") {
     $exe_suffix="-amd64"
-} elseif ($env:PYTHON -eq "C:\Python362") {
+} elseif ($env:PYTHON -eq "C:\Python36") {
     $exe_suffix=""
 } else {
     exit 0
